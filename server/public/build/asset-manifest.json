@@ -1,0 +1,36 @@
+{
+  "files": {
+    "main.css": "/fashion-cube/static/css/main.72099edd.chunk.css",
+    "main.js": "/fashion-cube/static/js/main.616795ee.chunk.js",
+    "main.js.map": "/fashion-cube/static/js/main.616795ee.chunk.js.map",
+    "runtime-main.js": "/fashion-cube/static/js/runtime-main.6fc8a9d4.js",
+    "runtime-main.js.map": "/fashion-cube/static/js/runtime-main.6fc8a9d4.js.map",
+    "static/css/2.5fc0a91c.chunk.css": "/fashion-cube/static/css/2.5fc0a91c.chunk.css",
+    "static/js/2.ec889d96.chunk.js": "/fashion-cube/static/js/2.ec889d96.chunk.js",
+    "static/js/2.ec889d96.chunk.js.map": "/fashion-cube/static/js/2.ec889d96.chunk.js.map",
+    "index.html": "/fashion-cube/index.html",
+    "precache-manifest.d1d5dd8f0abf4dd007ef4d090c42c8e0.js": "/fashion-cube/precache-manifest.d1d5dd8f0abf4dd007ef4d090c42c8e0.js",
+    "service-worker.js": "/fashion-cube/service-worker.js",
+    "static/css/2.5fc0a91c.chunk.css.map": "/fashion-cube/static/css/2.5fc0a91c.chunk.css.map",
+    "static/css/main.72099edd.chunk.css.map": "/fashion-cube/static/css/main.72099edd.chunk.css.map",
+    "static/js/2.ec889d96.chunk.js.LICENSE.txt": "/fashion-cube/static/js/2.ec889d96.chunk.js.LICENSE.txt",
+    "static/media/Group 8.png": "/fashion-cube/static/media/Group 8.8ed4d235.png",
+    "static/media/aboutiamge1.png": "/fashion-cube/static/media/aboutiamge1.2b1b84a8.png",
+    "static/media/aboutimage2.png": "/fashion-cube/static/media/aboutimage2.12589521.png",
+    "static/media/banner_1.jpg": "/fashion-cube/static/media/banner_1.fd4db0ff.jpg",
+    "static/media/deal_ofthe_week.png": "/fashion-cube/static/media/deal_ofthe_week.18a6bbdf.png",
+    "static/media/emptyCart.png": "/fashion-cube/static/media/emptyCart.02800820.png",
+    "static/media/empty_cart.png": "/fashion-cube/static/media/empty_cart.abebef23.png",
+    "static/media/image1.png": "/fashion-cube/static/media/image1.b0bd9e01.png",
+    "static/media/loginimage.png": "/fashion-cube/static/media/loginimage.5775d4c2.png",
+    "static/media/slider_2.jpg": "/fashion-cube/static/media/slider_2.a5bc9e89.jpg",
+    "static/media/slider_3.jpg": "/fashion-cube/static/media/slider_3.035f02ed.jpg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.6fc8a9d4.js",
+    "static/css/2.5fc0a91c.chunk.css",
+    "static/js/2.ec889d96.chunk.js",
+    "static/css/main.72099edd.chunk.css",
+    "static/js/main.616795ee.chunk.js"
+  ]
+}
