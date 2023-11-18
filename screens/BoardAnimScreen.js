@@ -68,6 +68,7 @@ const init = () => {
 
 init();
 
+let scaleItem = 1;
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -86,6 +87,21 @@ export default function BoardAnimScreen({navigation, route}) {
     const [date, setDate] = useState(new Date());
     const [boardName, setBoardName] = useState("");
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+
+    const handleScaleItem = (type = 'M') => {
+        console.log("-----setting ---", scaleItem)
+        if(type == 'S') {
+            scaleItem = 0.8
+        } else if (type == "M") {
+            scaleItem = 1
+
+        } else if (type == 'L') {
+            scaleItem = 1.2
+        }
+
+        closeModal('setting');
+        drawCanvas();
+    }
 
     const getDateByStr = (_date = date) => {
         const year = _date.getFullYear();
@@ -115,13 +131,22 @@ export default function BoardAnimScreen({navigation, route}) {
     };
 
     const [modalVisible, setModalVisible] = useState(false);
+    const [modalSettingVisible, setModalSettingVisible] = useState(false);
 
-    const openModal = () => {
-      setModalVisible(true);
+    const openModal = (type = 'save') => {
+        if(type == 'save') {
+            setModalVisible(true);
+        } else {
+            setModalSettingVisible(true);
+        }
     };
   
-    const closeModal = () => {
-      setModalVisible(false);
+    const closeModal = (type = 'save') => {
+        if(type == 'save') {
+            setModalVisible(false);
+        } else {
+            setModalSettingVisible(false);
+        }
     };
 
     AsyncStorage.getItem("user").then((user) => {
@@ -254,8 +279,8 @@ export default function BoardAnimScreen({navigation, route}) {
         let realX = (mouse.x) / game.camera.scale;
         let realY = (mouse.y) / game.camera.scale;
 
-        return realX > item.x + game.camera.x && realX < item.x + item.w / game.camera.scale + game.camera.x &&
-            realY > item.y + game.camera.y && realY < item.y + item.h / game.camera.scale + game.camera.y
+        return realX > item.x + game.camera.x && realX < item.x + item.w * item.scale / game.camera.scale + game.camera.x &&
+            realY > item.y + game.camera.y && realY < item.y + item.h * item.scale / game.camera.scale + game.camera.y
     }
 
     const onVideoControlBtn = (key) => {
@@ -430,6 +455,8 @@ export default function BoardAnimScreen({navigation, route}) {
             }
         } else if(type == 'load') {
             navigation.navigate("PlayBoardScreen", {isShare: isShare});
+        } else if(type == 'setting') {
+            openModal('setting')
         }
     }
 
@@ -713,6 +740,7 @@ export default function BoardAnimScreen({navigation, route}) {
                 drawLines();
                 
                 items.forEach((item, i) => {
+                    item.scale = scaleItem;
                     item.draw();
 
                     ctx.beginPath()
@@ -1159,6 +1187,22 @@ export default function BoardAnimScreen({navigation, route}) {
             </View>
         </Modal>
 
+        <Modal visible={modalSettingVisible} animationType='fade' onRequestClose={closeModal.bind(this, 'setting')}>
+            <View style={styles.modal}>
+                <TouchableOpacity style={styles.modal_item} onPress={handleScaleItem.bind(this, 'S')}>
+                    <Image style={styles.image_S} source={require('../images/gameIcons/p1.png')}></Image>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.modal_item} onPress={handleScaleItem.bind(this, 'M')}>
+                    <Image style={styles.image_M} source={require('../images/gameIcons/p1.png')}></Image>
+                </TouchableOpacity>
+                
+                <TouchableOpacity style={styles.modal_item} onPress={handleScaleItem.bind(this, 'L')}>
+                    <Image style={styles.image_L} source={require('../images/gameIcons/p1.png')}></Image>
+                </TouchableOpacity>
+            </View>
+        </Modal>
+
         <DateTimePickerModal
           isVisible={isDatePickerVisible}
           mode="date"
@@ -1295,5 +1339,29 @@ const styles = StyleSheet.create({
         margin: 10,
         justifyContent: 'center',
         alignItems: 'center'
-    }
+    },
+    modal_item: {
+        width: 200,
+        height: 200,
+        margin: 30,
+        borderRadius: 50,
+        backgroundColor: '#aaa',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    image_S: {
+        width: 80,
+        height: 80,
+        resizeMode: 'contain'
+    },
+    image_M: {
+        width: 120,
+        height: 120,
+        resizeMode: 'contain'
+    },
+    image_L: {
+        width: 160,
+        height: 160,
+        resizeMode: 'contain'
+    },
 })

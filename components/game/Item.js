@@ -9,6 +9,7 @@ class Item {
     this.type = props.type
     this.w = props.w;
     this.h = props.h;
+    this.scale = 1;
     if(!!props.startPos) {
       this.startPos = props.startPos
     } else {
@@ -34,19 +35,20 @@ class Item {
     this.ctx.save()
     this.ctx.translate(x, y)
     if(this.imgs[this.type]) {
-        this.ctx.drawImage(this.imgs[this.type], 0 , 0, this.w, this.h);
+        console.log(this.scale, "--------scale")
+        this.ctx.drawImage(this.imgs[this.type], 0 , 0, this.w * this.scale, this.h * this.scale);
     }
     if(!!this.name && this.name != "") {
         this.ctx.textAlign = 'center'
         this.ctx.textBaseline = 'middle'
-        this.ctx.font = Math.round(12) + 'px Arial'
+        this.ctx.font = Math.round(12) * this.scale + 'px Arial'
         this.ctx.fillStyle = 'white'
-        this.ctx.fillText(this.name, this.w / 2, this.h / 2)
+        this.ctx.fillText(this.name, this.w * this.scale / 2, this.h * this.scale / 2)
     }
 
     if(this.selected) {
       this.ctx.beginPath();
-      this.ctx.rect(0, 0, this.w, this.h);
+      this.ctx.rect(0, 0, this.w * this.scale, this.h * this.scale);
       this.ctx.stroke();
       this.ctx.closePath();
     }
