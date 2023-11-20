@@ -10,6 +10,7 @@ export const BALL = [
     'ball2',
     'ball3',
     'ball4',
+    'ball5',
 ];
 
 export const PLAYER = [

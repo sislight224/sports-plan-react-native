@@ -35,6 +35,7 @@ const images = {
     'ball2': require('../images/gameIcons/ball2.png'),
     'ball3': require('../images/gameIcons/ball3.png'),
     'ball4': require('../images/gameIcons/ball4.png'),
+    'ball5': require('../images/gameIcons/ball5.png'),
     'p1' : require('../images/gameIcons/p1.png'),
     'p2' : require('../images/gameIcons/p2.png'),
     'p3' : require('../images/gameIcons/p3.png'),
