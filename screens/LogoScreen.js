@@ -17,6 +17,7 @@ import { Ionicons } from "@expo/vector-icons";
 
 import CustomButton from "../components/CustomButton";
 import InputField from "../components/InputField";
+import { hRate, wRate } from "../config/constants";
 
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
@@ -56,7 +57,7 @@ const LogoScreen = ({ navigation }) => {
           </Text>
         </View>
 
-          <View style={{flexDirection: 'row', marginTop: 450}}></View>
+          <View style={{flexDirection: 'row', marginTop: 450 * hRate}}></View>
           <CustomButton
             color={"rgba(25, 33, 38, 1)"}
             label={"SignUp"}
@@ -69,12 +70,12 @@ const LogoScreen = ({ navigation }) => {
             style={{
               flexDirection: "row",
               justifyContent: "center",
-              marginBottom: 30,
+              marginBottom: 30 * hRate,
             }}
           >
             <Text style={{ color: activeColors.tint }}>Join us before? </Text>
             <TouchableOpacity onPress={() => navigation.navigate("Login")}>
-              <Text style={{ color: activeColors.accent, fontWeight: "700" }}>
+              <Text style={{ color: activeColors.accent, fontWeight: "" + 700 * screenWidth * wRate }}>
                 {" "}
                 Login
               </Text>
@@ -140,9 +141,9 @@ const styles = StyleSheet.create({
   },
   footer: {
     width: screenWidth,
-    height: 400,
+    height: 400 * hRate,
     position: 'absolute',
-    bottom: 150
+    bottom: 150 * hRate
   }
 })
 

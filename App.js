@@ -7,6 +7,8 @@ import { storeData, getData } from "./config/asyncStorage";
 // import * as SplashScreen from "expo-splash-screen";
 import RegisterScreen from "./screens/RegisterScreen";
 
+import { StripeProvider } from '@stripe/stripe-react-native';
+
 //Theme context is used to update the
 //theme of the app. It will be used in
 //all the screens of the app.
@@ -20,7 +22,10 @@ import MenuScreen from "./screens/MenuScreen";
 import CalendarScreen from "./screens/CalendarScreen";
 import SettingsScreen from "./screens/Settings";
 import PasswordScreen from "./screens/PasswordScreen";
+import MemberShipScreen from "./screens/MemberShipScreen";
+import SubscriptionScreen from "./screens/SubscriptionScreen";
 
+import {YOUR_PUBLISHABLE_KEY} from "./config/constants";
 //creating simple splash screen
 // SplashScreen.preventAutoHideAsync();
 
@@ -84,72 +89,84 @@ const App = () => {
     //we will pass the theme and updateTheme function
     //to the ThemeContext.Provider so that it can be
     //used in all the screens of the app.
-    <ThemeContext.Provider value={{ theme, updateTheme }}>
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName="Logo">
-          <Stack.Screen
-            options={{ headerShown: false }}
-            name="Logo"
-            component={LogoScreen}
-          />
-          <Stack.Screen
-            options={{ headerShown: false }}
-            name="Login"
-            component={LoginScreen}
-          />
-          <Stack.Screen
-            options={{ headerShown: false }}
-            name="Register"
-            component={RegisterScreen}
-          />
-          {/* <Stack.Screen
-            name="Footer"
-            component={Footer}
-            options={{ headerShown: false }}
-          /> */}
-          <Stack.Screen
-            name="BoardScreen"
-            component={BoardScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="BoardAnimScreen"
-            component={BoardAnimScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            options={{ headerShown: false }}
-            name="PlayBoardScreen"
-            component={PlayBoardScreen}
-          />
-          <Stack.Screen
-            options={{ headerShown: false }}
-            name="StrategeScreen"
-            component={StrategeScreen}
-          />
-          <Stack.Screen
-            options={{ headerShown: false }}
-            name="MenuScreen"
-            component={MenuScreen}
-          />
-          <Stack.Screen
-            options={{ headerShown: false }}
-            name="CalendarScreen"
-            component={CalendarScreen}
-          />
-          <Stack.Screen
-            options={{ headerShown: false }}
-            name="Settings"
-            component={SettingsScreen}
-          />
-          <Stack.Screen
-            options={{ headerShown: false }}
-            name="PasswordScreen"
-            component={PasswordScreen}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </ThemeContext.Provider>
+      <ThemeContext.Provider value={{ theme, updateTheme }}>
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName="Logo">
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="Logo"
+              component={LogoScreen}
+            />
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="Login"
+              component={LoginScreen}
+            />
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="Register"
+              component={RegisterScreen}
+            />
+            {/* <Stack.Screen
+              name="Footer"
+              component={Footer}
+              options={{ headerShown: false }}
+            /> */}
+            <Stack.Screen
+              name="BoardScreen"
+              component={BoardScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="BoardAnimScreen"
+              component={BoardAnimScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="PlayBoardScreen"
+              component={PlayBoardScreen}
+            />
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="StrategeScreen"
+              component={StrategeScreen}
+            />
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="MenuScreen"
+              component={MenuScreen}
+            />
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="CalendarScreen"
+              component={CalendarScreen}
+            />
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="Settings"
+              component={SettingsScreen}
+            />
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="PasswordScreen"
+              component={PasswordScreen}
+            />
+            <Stack.Screen
+              name="MemberShipScreen"
+              component={MemberShipScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="SubscriptionScreen"
+              component={SubscriptionScreen}
+              options={{ headerShown: false }}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </ThemeContext.Provider>
+
+
   );
 };
 

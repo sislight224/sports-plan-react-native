@@ -6,6 +6,7 @@ import { StyleSheet } from "react-native";
 import CategoryTabSection from "../components/sections/CategoryTabSection";
 import FeaturedItemsSection from "../components/sections/FeaturedItemsSection";
 import HorizontalDealsSection from "../components/sections/HorizontalDealsSection";
+import { hRate, wRate } from "../config/constants";
 
 const HomeScreens = () => {
   const { theme } = useContext(ThemeContext);
@@ -41,8 +42,8 @@ const HomeScreens = () => {
           <View
             style={{
               flexDirection: "row",
-              marginTop: 10,
-              paddingHorizontal: 10,
+              marginTop: 10 * hRate,
+              paddingHorizontal: 10 * wRate,
             }}
           ></View>
 
@@ -53,8 +54,8 @@ const HomeScreens = () => {
           <View
             style={{
               flexDirection: "row",
-              marginTop: 10,
-              paddingHorizontal: 10,
+              marginTop: 10 * hRate,
+              paddingHorizontal: 10* wRate,
             }}
           ></View>
 
@@ -70,9 +71,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   sectionTitle: {
-    marginTop: 25,
-    marginLeft: 25,
-    marginBottom: 25,
+    marginTop: 25* hRate,
+    marginLeft: 25* wRate,
+    marginBottom: 25* hRate,
   },
 });
 

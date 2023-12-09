@@ -10,6 +10,7 @@ import axios from 'axios';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import InputField from "../components/InputField";
+import { hRate, wRate } from "../config/constants";
 
 let setting = {
     drawLine: 'none'
@@ -129,6 +130,8 @@ export default function BoardScreen({navigation, route}) {
     const [modalSettingVisible, setModalSettingVisible] = useState(false);
 
     const openModal = (type = 'save') => {
+        console.log("show modal")
+
         if(type == 'save') {
             setModalVisible(true);
         } else {
@@ -137,6 +140,7 @@ export default function BoardScreen({navigation, route}) {
     };
   
     const closeModal = (type = 'save') => {
+        console.log("close modal", modalVisible, type)
         if(type == 'save') {
             setModalVisible(false);
         } else {
@@ -1042,7 +1046,7 @@ export default function BoardScreen({navigation, route}) {
             </TouchableOpacity>
         </View> */}
 
-        <Modal visible={modalVisible} animationType="fade" onRequestClose={closeModal}>
+        <Modal visible={modalVisible} animationType="fade" onRequestClose={closeModal.bind(this, 'save')}>
             <View style={styles.modal}>
                 <InputField 
                     label={"Board Name"}
@@ -1066,7 +1070,7 @@ export default function BoardScreen({navigation, route}) {
                 <TouchableOpacity style={styles.modal_btn} title="Close Modal" onPress={saveBoard} >
                     <Text>Save</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={{...styles.modal_btn, backgroundColor: '#aaa'}} title="Close Modal" onPress={closeModal} >
+                <TouchableOpacity style={{...styles.modal_btn, backgroundColor: '#aaa'}} title="Close Modal" onPress={closeModal.bind(this, 'save')} >
                     <Text>Close</Text>
                 </TouchableOpacity>
             </View>
@@ -1225,27 +1229,27 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     modal_item: {
-        width: 200,
-        height: 200,
-        margin: 30,
-        borderRadius: 50,
+        width: 200 * hRate,
+        height: 200 * hRate,
+        margin: 30 * hRate,
+        borderRadius: 50 * hRate,
         backgroundColor: '#aaa',
         justifyContent: 'center',
         alignItems: 'center'
     },
     image_S: {
-        width: 80,
-        height: 80,
+        width: 80 * hRate,
+        height: 80 * hRate,
         resizeMode: 'contain'
     },
     image_M: {
-        width: 120,
-        height: 120,
+        width: 120 * hRate,
+        height: 120 * hRate,
         resizeMode: 'contain'
     },
     image_L: {
-        width: 160,
-        height: 160,
+        width: 160 * hRate,
+        height: 160 * hRate,
         resizeMode: 'contain'
     },
 })

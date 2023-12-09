@@ -14,7 +14,8 @@ const paypal_config = require('../configs/paypal-config')
 const paypal = require('paypal-rest-sdk')
 
 const { uploadProductImage, uploadVariantImage } =  require("../utils/multer");
-
+const YOUR_STRIPE_SECRET_KEY = "sk_test_51OFqZlKNQd6FEMJUq2p0UWI68YgVXJyd82K93W1sMtpN7YnFeGGeoMWSDhj03FtiIkoaffWDwIs7g5LotWShXAGO006kjkVWqu";
+const stripe = require('stripe')(YOUR_STRIPE_SECRET_KEY);
 
 //GET /products
 router.get('/products', function (req, res, next) {
@@ -590,7 +591,73 @@ router.post('/api/getBoardById', function(req, res, next) {
   })
 })
 
+// POST get Board data by id API
+router.post('/api/payment_intent', function(req, res, next) {
+  // const {id} = req.body;
+  // Create a payment intent
+  const createPaymentIntent = async () => {
+    try {
+      const paymentIntent = await stripe.paymentIntents.create({
+        amount: 3000, // Amount in cents (e.g., $10.00)
+        currency: 'usd',
+      });
 
+      return paymentIntent.client_secret;
+    } catch (error) {
+      console.error('Error creating payment intent:', error);
+      throw error;
+    }
+  };
+
+  // Example usage
+  createPaymentIntent()
+    .then(clientSecret => {
+      console.log('Payment Intent Client Secret:', clientSecret);
+      // Pass the clientSecret back to your React Native app
+      res.json(clientSecret);
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      // Handle the error
+    });
+})
+
+//Post get stripe payment sheet
+router.post('/payment-sheet', async (_, res) => {
+
+  
+
+  const customers = await stripe.customers.list();
+
+  const customer = customers.data[0];
+  if(!customer) {
+    return res.send({
+      error: 'You have no customer created.'
+    })
+  }
+
+  const ephemeralKey = await stripe.ephemeralKeys.create(
+    {customer: customer.id},
+    {apiVersion: '2020-03-02'},
+  );
+  // console.log("--------ephemeralKey-", ephemeralKey);
+
+  const paymentIntent = await stripe.paymentIntents.create({
+    amount: 100 * 100,
+    currency: 'usd',
+    customer: customer.id,
+    payment_method_types: [
+      'card'
+    ]
+  });
+
+  return res.json({
+    paymentIntent: paymentIntent.client_secret,
+    ephemeralKey: ephemeralKey.secret,
+    customer: customer.id
+  })
+
+})
 
 
 function generateFilterResultArray(products, targetProp) {

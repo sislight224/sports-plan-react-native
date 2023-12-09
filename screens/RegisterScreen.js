@@ -22,6 +22,7 @@ import CustomButton from "../components/CustomButton";
 import CustomHeader from "../components/UI/CustomHeader";
 import { BASEURL } from "../config/constants";
 import axios from 'axios';
+import { hRate, wRate } from "../config/constants";
 
 const RegisterScreen = ({ navigation }) => {
   const [username, setUsername] = useState("");

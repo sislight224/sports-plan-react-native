@@ -11,6 +11,7 @@ import { BASEURL, ITEM_TYPE, BALL, PLAYER } from "../config/constants";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import InputField from "../components/InputField";
+import { hRate, wRate } from "../config/constants";
 
 let setting = {
     drawLine: 'none'
@@ -302,7 +303,9 @@ export default function BoardAnimScreen({navigation, route}) {
         
         } else if(key == 'add') {
             saveStage();
-            game.stageIdx++;
+            if(!!game.stages[game.stageIdx + 1]) {
+                game.stageIdx++;
+            }
             // game.stages[game.stageIdx] = {...game.stages[game.stageIdx - 1]}
 
         } else if(key == 'delete') {
@@ -389,10 +392,14 @@ export default function BoardAnimScreen({navigation, route}) {
                 items: [...getItemsJSON(type)],
             }
         }
+        console.log(game.stages,game.stageIdx)
+
     }
 
     const generateDrawItems = () => {
         if(game.stages.length == 0) return;
+        console.log(game.stages,game.stageIdx)
+
         game.playerNum1 = 1;
         game.playerNum2 = 1;
         const pathArray = [];
@@ -733,6 +740,8 @@ export default function BoardAnimScreen({navigation, route}) {
             const draw = () => {
                 if(game.isPlaying) return;
                 ctx.clearRect(0, 0, windowWidth, windowHeight);
+                ctx.save();
+                ctx.rotate(game.camera.angle / 180 * Math.PI);
                 ctx.scale(game.camera.scale, game.camera.scale);
 
                 backgroundPart()
@@ -752,8 +761,8 @@ export default function BoardAnimScreen({navigation, route}) {
                     ctx.setLineDash([]);
                     ctx.closePath();
                 })
-
                 ctx.setTransform(1.5, 0, 0, 1.5, 0, 0);
+                ctx.restore();
                 // setTimeout(draw, 500);
             }
 
@@ -768,6 +777,8 @@ export default function BoardAnimScreen({navigation, route}) {
 
                 curTime += delay / 1000;
                 ctx.clearRect(0, 0, windowWidth, windowHeight);
+                ctx.save();
+                ctx.rotate(game.camera.angle / 180 * Math.PI);
                 ctx.scale(game.camera.scale, game.camera.scale);
 
                 backgroundPart()
@@ -779,7 +790,6 @@ export default function BoardAnimScreen({navigation, route}) {
                     let y = item.startPos.y + (item.y - item.startPos.y) * (curTime / during)
                     item.draw({x, y});
                 })
-                
 
                 if(curTime > during) {
                     curTime = 0;
@@ -790,6 +800,7 @@ export default function BoardAnimScreen({navigation, route}) {
 
                 }
                 ctx.setTransform(1.5, 0, 0, 1.5, 0, 0);
+                ctx.restore();
                 setTimeout(updatePlay, delay);
             }
 
@@ -893,12 +904,15 @@ export default function BoardAnimScreen({navigation, route}) {
                 const w = windowWidth * 0.8;
                 const h = windowHeight * 0.7;
 
+                ctx.save()
+                ctx.rotate(-game.camera.angle / 180 * Math.PI)
                 if(!!imgAsset['bg']) {
-                    ctx.drawImage(imgAsset['bg'], 0, 0, windowWidth / game.camera.scale, windowHeight / game.camera.scale);
+                    ctx.drawImage(imgAsset['bg'], 0, 0, windowWidth , windowHeight / game.camera.scale);
                 }
                 if(!!imgAsset['bg-bottom']) {
                     ctx.drawImage(imgAsset['bg-bottom'], 0, windowHeight * 0.4 / game.camera.scale, windowWidth / game.camera.scale, windowHeight * 0.6 / game.camera.scale);
                 }
+                ctx.restore();
                 if(!!imgAsset[game.stadium]) {
                     ctx.drawImage(imgAsset[game.stadium], mW - (w / 2) + game.camera.x, mH - h / 2 + 20 + game.camera.y , w, h);
                 }
@@ -1157,7 +1171,7 @@ export default function BoardAnimScreen({navigation, route}) {
         </View>}
 
 
-        <Modal visible={modalVisible} animationType="fade" onRequestClose={closeModal}>
+        <Modal visible={modalVisible} animationType="fade" onRequestClose={closeModal.bind(this, 'save')}>
             <View style={styles.modal}>
                 <InputField 
                     label={"Board Name"}
@@ -1181,7 +1195,7 @@ export default function BoardAnimScreen({navigation, route}) {
                 <TouchableOpacity style={styles.modal_btn} title="Close Modal" onPress={saveBoard} >
                     <Text>Save</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={{...styles.modal_btn, backgroundColor: '#aaa'}} title="Close Modal" onPress={closeModal} >
+                <TouchableOpacity style={{...styles.modal_btn, backgroundColor: '#aaa'}} title="Close Modal" onPress={closeModal.bind(this, 'save')} >
                     <Text>Close</Text>
                 </TouchableOpacity>
             </View>
@@ -1341,27 +1355,27 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     modal_item: {
-        width: 200,
-        height: 200,
-        margin: 30,
-        borderRadius: 50,
+        width: 200 * hRate,
+        height: 200 * hRate,
+        margin: 30 * hRate,
+        borderRadius: 50 * hRate,
         backgroundColor: '#aaa',
         justifyContent: 'center',
         alignItems: 'center'
     },
     image_S: {
-        width: 80,
-        height: 80,
+        width: 80 * hRate,
+        height: 80 * hRate,
         resizeMode: 'contain'
     },
     image_M: {
-        width: 120,
-        height: 120,
+        width: 120 * hRate,
+        height: 120 * hRate,
         resizeMode: 'contain'
     },
     image_L: {
-        width: 160,
-        height: 160,
+        width: 160 * hRate,
+        height: 160 * hRate,
         resizeMode: 'contain'
     },
 })
