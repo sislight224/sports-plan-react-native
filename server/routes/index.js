@@ -591,73 +591,102 @@ router.post('/api/getBoardById', function(req, res, next) {
   })
 })
 
-// POST get Board data by id API
-router.post('/api/payment_intent', function(req, res, next) {
-  // const {id} = req.body;
-  // Create a payment intent
-  const createPaymentIntent = async () => {
-    try {
-      const paymentIntent = await stripe.paymentIntents.create({
-        amount: 3000, // Amount in cents (e.g., $10.00)
-        currency: 'usd',
-      });
+// // POST get Board data by id API
+// router.post('/api/payment_intent', function(req, res, next) {
+//   // const {id} = req.body;
+//   // Create a payment intent
+//   const createPaymentIntent = async () => {
+//     try {
+//       const paymentIntent = await stripe.paymentIntents.create({
+//         amount: 3000, // Amount in cents (e.g., $10.00)
+//         currency: 'usd',
+//       });
 
-      return paymentIntent.client_secret;
-    } catch (error) {
-      console.error('Error creating payment intent:', error);
-      throw error;
-    }
-  };
+//       return paymentIntent.client_secret;
+//     } catch (error) {
+//       console.error('Error creating payment intent:', error);
+//       throw error;
+//     }
+//   };
 
-  // Example usage
-  createPaymentIntent()
-    .then(clientSecret => {
-      console.log('Payment Intent Client Secret:', clientSecret);
-      // Pass the clientSecret back to your React Native app
-      res.json(clientSecret);
-    })
-    .catch(error => {
-      console.error('Error:', error);
-      // Handle the error
-    });
-})
+//   // Example usage
+//   createPaymentIntent()
+//     .then(clientSecret => {
+//       console.log('Payment Intent Client Secret:', clientSecret);
+//       // Pass the clientSecret back to your React Native app
+//       res.json(clientSecret);
+//     })
+//     .catch(error => {
+//       console.error('Error:', error);
+//       // Handle the error
+//     });
+// })
 
-//Post get stripe payment sheet
-router.post('/payment-sheet', async (_, res) => {
+// //Post get stripe payment sheet
+// router.post('/payment-sheet', async (_, res) => {
 
   
 
-  const customers = await stripe.customers.list();
+//   const customers = await stripe.customers.list();
 
-  const customer = customers.data[0];
-  if(!customer) {
-    return res.send({
-      error: 'You have no customer created.'
-    })
+//   const customer = customers.data[0];
+//   if(!customer) {
+//     return res.send({
+//       error: 'You have no customer created.'
+//     })
+//   }
+
+//   const ephemeralKey = await stripe.ephemeralKeys.create(
+//     {customer: customer.id},
+//     {apiVersion: '2020-03-02'},
+//   );
+//   // console.log("--------ephemeralKey-", ephemeralKey);
+
+//   const paymentIntent = await stripe.paymentIntents.create({
+//     amount: 100 * 100,
+//     currency: 'usd',
+//     customer: customer.id,
+//     payment_method_types: [
+//       'card'
+//     ]
+//   });
+
+//   return res.json({
+//     paymentIntent: paymentIntent.client_secret,
+//     ephemeralKey: ephemeralKey.secret,
+//     customer: customer.id
+//   })
+
+// })
+
+router.post('/create-subscription', async (req, res) => {
+  const { paymentMethodId, selectedPlan } = req.body;
+
+  try {
+    // Create a customer with the payment method
+    const customer = await stripe.customers.create({
+      payment_method: paymentMethodId,
+      invoice_settings: {
+        default_payment_method: paymentMethodId,
+      },
+    });
+
+    // Retrieve the price ID associated with the selected plan
+    const price = await stripe.prices.retrieve(`price_${selectedPlan}`);
+
+    // Create a subscription
+    const subscription = await stripe.subscriptions.create({
+      customer: customer.id,
+      items: [{ price: price.id }], // Use the ID of the price object
+      expand: ['latest_invoice.payment_intent'],
+    });
+
+    res.status(200).json({ subscription });
+  } catch (error) {
+    console.error('Error creating subscription:', error);
+    res.status(500).json({ error: { message: 'Internal Server Error' } });
   }
-
-  const ephemeralKey = await stripe.ephemeralKeys.create(
-    {customer: customer.id},
-    {apiVersion: '2020-03-02'},
-  );
-  // console.log("--------ephemeralKey-", ephemeralKey);
-
-  const paymentIntent = await stripe.paymentIntents.create({
-    amount: 100 * 100,
-    currency: 'usd',
-    customer: customer.id,
-    payment_method_types: [
-      'card'
-    ]
-  });
-
-  return res.json({
-    paymentIntent: paymentIntent.client_secret,
-    ephemeralKey: ephemeralKey.secret,
-    customer: customer.id
-  })
-
-})
+});
 
 
 function generateFilterResultArray(products, targetProp) {

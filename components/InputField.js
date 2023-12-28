@@ -15,9 +15,6 @@ export default function InputField({
 }) {
   const { theme } = useContext(ThemeContext);
   let activeColors = colors[theme.mode];
-
-  console.log(activeColors.primary, theme.mode);
-
   return (
     <View
       style={{

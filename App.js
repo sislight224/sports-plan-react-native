@@ -23,7 +23,7 @@ import CalendarScreen from "./screens/CalendarScreen";
 import SettingsScreen from "./screens/Settings";
 import PasswordScreen from "./screens/PasswordScreen";
 import MemberShipScreen from "./screens/MemberShipScreen";
-import SubscriptionScreen from "./screens/SubscriptionScreen";
+import StripeScreen from "./screens/StripeScreen";
 
 import {YOUR_PUBLISHABLE_KEY} from "./config/constants";
 //creating simple splash screen
@@ -158,10 +158,11 @@ const App = () => {
               options={{ headerShown: false }}
             />
             <Stack.Screen
-              name="SubscriptionScreen"
-              component={SubscriptionScreen}
+              name="StripeScreen"
+              component={StripeScreen}
               options={{ headerShown: false }}
             />
+
           </Stack.Navigator>
         </NavigationContainer>
       </ThemeContext.Provider>

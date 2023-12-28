@@ -15,7 +15,7 @@ import {
 import axios from 'axios';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { storeData, getData, getJsonData } from "../config/asyncStorage";
-import { BASEURL } from "../config/constants";
+import { BASEURL, YOUR_PUBLISHABLE_KEY } from "../config/constants";
 
 import CustomHeader from "../components/UI/CustomHeader";
 
@@ -23,7 +23,7 @@ const MemberShipScreen = ({ navigation }) => {
   const { theme } = useContext(ThemeContext);
 
   let activeColors = colors[theme.mode];
-  const [YOUR_PAYMENT_INTENT_CLIENT_SECRET, set_YOUR_PAYMENT_INTENT_CLIENT_SECRET] = useState('');
+  // const [YOUR_PAYMENT_INTENT_CLIENT_SECRET, set_YOUR_PAYMENT_INTENT_CLIENT_SECRET] = useState('');
 
   AsyncStorage.getItem("user").then((user) => {
     if(!!user) {
@@ -32,19 +32,20 @@ const MemberShipScreen = ({ navigation }) => {
   });
 
   useEffect(() => {
-    axios
-    .post(`${BASEURL}/api/payment_intent`)
-    .then((response) => {
-      console.log(response.data)
-      set_YOUR_PAYMENT_INTENT_CLIENT_SECRET(response.data)
-    })
-    .catch((error) => {
-      console.error(error);
-    });
+    // axios
+    // .post(`${BASEURL}/api/payment_intent`)
+    // .then((response) => {
+    //   console.log(response.data)
+    //   set_YOUR_PAYMENT_INTENT_CLIENT_SECRET(response.data)
+    // })
+    // .catch((error) => {
+    //   console.error(error);
+    // });
   }, []);
 
   const handleStripePayment = (type = "month") => {
-    navigation.navigate("SubscriptionScreen", {secret_key: YOUR_PAYMENT_INTENT_CLIENT_SECRET});
+
+    navigation.navigate("StripeScreen", {selectplan: "month"});
   }
 
 

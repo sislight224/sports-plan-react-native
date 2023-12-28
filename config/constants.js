@@ -4,6 +4,10 @@ import {
 export const BASEURL = "http://192.168.144.97:3000";
 export const YOUR_PUBLISHABLE_KEY = "pk_test_51OFqZlKNQd6FEMJUAMIpWx4cGLUswxFG90uckIG1Vjxt9sLakZNa8z543h8hQSXPykcFOLn0ZO7OA7w2qOwsERcr00beB0LPqg";
 
+export const SUBSCRIBE_MONTH = "price_1OKLKYKNQd6FEMJUOYnQjyB1";
+export const SUBSCRIBE_3MONTH = "price_1OKLM0KNQd6FEMJUImzeX9KJ";
+export const SUBSCRIBE_YEAR = "price_1OKLMkKNQd6FEMJUCVv9TLw1";
+
 export const hRate = Dimensions.get("window").height / 1280;
 export const wRate = Dimensions.get("window").width / 720;
 

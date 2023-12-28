@@ -20,7 +20,7 @@ import CustomButton from "../components/CustomButton";
 import InputField from "../components/InputField";
 import CustomHeader from "../components/UI/CustomHeader";
 
-import { BASEURL, TYPE } from "../config/constants";
+import { BASEURL, TYPE, hRate, wRate } from "../config/constants";
 import axios from 'axios';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -160,9 +160,9 @@ const styles = StyleSheet.create({
   },
   tab: {
     flexDirection: 'column', 
-    width: 200, 
-    height: 60, 
-    borderRadius: 10, 
+    width: 200 * wRate, 
+    height: 60 * hRate, 
+    borderRadius: 10 * wRate, 
     backgroundColor: '#BBF246', //#F2F4F7
     margin: 10,
     justifyContent: 'center',
